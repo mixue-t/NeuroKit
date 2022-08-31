@@ -102,9 +102,9 @@ def _ppg_clean_missing(ppg_signal):
 # =============================================================================
 
 def _ppg_clean_elgendi(ppg_signal, sampling_rate):
-
+    # changed MX highcut from 8 -> 1.4
     filtered = signal_filter(
-        ppg_signal, sampling_rate=sampling_rate, lowcut=0.5, highcut=8, order=3, method="butter_ba"
+        ppg_signal, sampling_rate=sampling_rate, lowcut=0.5, highcut=1.4, order=3, method="butter_ba"
     )
     return filtered
 
