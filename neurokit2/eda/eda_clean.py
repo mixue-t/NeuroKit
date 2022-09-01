@@ -9,7 +9,7 @@ from ..misc import as_vector, NeuroKitWarning
 from ..signal import signal_filter, signal_smooth
 
 
-def eda_clean(eda_signal, sampling_rate=1000, method="neurokit"):
+def eda_clean(eda_signal, sampling_rate=1000, method="neurokit", highcut=3):
     """**Preprocess Electrodermal Activity (EDA) signal**
 
     Parameters
@@ -83,10 +83,10 @@ def _eda_clean_missing(eda_signal):
 # =============================================================================
 # NK
 # =============================================================================
-def _eda_clean_neurokit(eda_signal, sampling_rate=1000):
+def _eda_clean_neurokit(eda_signal, sampling_rate=1000, highcut=3):
 
     # Filtering
-    filtered = signal_filter(eda_signal, sampling_rate=sampling_rate, highcut=3, method="butterworth", order=4)
+    filtered = signal_filter(eda_signal, sampling_rate=sampling_rate, highcut=highcut, method="butterworth", order=4)
 
     return filtered
 

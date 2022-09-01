@@ -8,7 +8,7 @@ from ..misc import as_vector, NeuroKitWarning
 from ..signal import signal_filter
 
 
-def ppg_clean(ppg_signal, sampling_rate=1000, heart_rate=None, method="elgendi"):
+def ppg_clean(ppg_signal, sampling_rate=1000, heart_rate=None, lowcut=0.5, highcut=8, method="elgendi"):
     """**Clean a photoplethysmogram (PPG) signal**
 
     Prepare a raw PPG signal for systolic peak detection.
@@ -79,7 +79,7 @@ def ppg_clean(ppg_signal, sampling_rate=1000, heart_rate=None, method="elgendi")
 
     method = method.lower()
     if method in ["elgendi"]:
-        clean = _ppg_clean_elgendi(ppg_signal, sampling_rate)
+        clean = _ppg_clean_elgendi(ppg_signal, sampling_rate, highcut=highcut)
     elif method in ["nabian2018"]:
         clean = _ppg_clean_nabian2018(ppg_signal, sampling_rate, heart_rate=heart_rate)
     else:
@@ -101,10 +101,9 @@ def _ppg_clean_missing(ppg_signal):
 # Methods
 # =============================================================================
 
-def _ppg_clean_elgendi(ppg_signal, sampling_rate):
-    # changed MX highcut from 8 -> 1.4
+def _ppg_clean_elgendi(ppg_signal, sampling_rate, lowcut=0.5, highcut=8):
     filtered = signal_filter(
-        ppg_signal, sampling_rate=sampling_rate, lowcut=0.5, highcut=1.4, order=3, method="butter_ba"
+        ppg_signal, sampling_rate=sampling_rate, lowcut=lowcut, highcut=highcut, order=3, method="butter_ba"
     )
     return filtered
 

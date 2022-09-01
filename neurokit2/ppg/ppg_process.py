@@ -8,7 +8,7 @@ from .ppg_clean import ppg_clean
 from .ppg_findpeaks import ppg_findpeaks
 
 
-def ppg_process(ppg_signal, sampling_rate=1000, **kwargs):
+def ppg_process(ppg_signal, sampling_rate=1000, lowcut=0.5, highcut=8, **kwargs):
     """**Process a photoplethysmogram (PPG)  signal**
 
     Convenience function that automatically processes a photoplethysmogram signal.
@@ -51,11 +51,13 @@ def ppg_process(ppg_signal, sampling_rate=1000, **kwargs):
       plt.close()
 
     """
+
+    print('modified')
     # Sanitize input
     ppg_signal = as_vector(ppg_signal)
 
     # Clean signal
-    ppg_cleaned = ppg_clean(ppg_signal, sampling_rate=sampling_rate)
+    ppg_cleaned = ppg_clean(ppg_signal, sampling_rate=sampling_rate, lowcut=lowcut, highcut=highcut)
 
     # Find peaks
     info = ppg_findpeaks(ppg_cleaned, sampling_rate=sampling_rate, **kwargs)

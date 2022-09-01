@@ -9,7 +9,7 @@ from ..misc import NeuroKitWarning, as_vector
 from ..signal import signal_detrend, signal_filter
 
 
-def rsp_clean(rsp_signal, sampling_rate=1000, method="khodadad2018"):
+def rsp_clean(rsp_signal, sampling_rate=1000, method="khodadad2018", lowcut=None, highcut=None):
     """**Preprocess a respiration (RSP) signal**
 
     Clean a respiration signal using different sets of parameters, such as:
@@ -77,7 +77,7 @@ def rsp_clean(rsp_signal, sampling_rate=1000, method="khodadad2018"):
 
     method = method.lower()  # remove capitalised letters
     if method in ["khodadad", "khodadad2018"]:
-        clean = _rsp_clean_khodadad2018(rsp_signal, sampling_rate)
+        clean = _rsp_clean_khodadad2018(rsp_signal, sampling_rate, lowcut=lowcut, highcut=highcut)
     elif method == "biosppy":
         clean = _rsp_clean_biosppy(rsp_signal, sampling_rate)
     else:
@@ -101,7 +101,7 @@ def _rsp_clean_missing(rsp_signal):
 # =============================================================================
 # Khodadad et al. (2018)
 # =============================================================================
-def _rsp_clean_khodadad2018(rsp_signal, sampling_rate=1000):
+def _rsp_clean_khodadad2018(rsp_signal, sampling_rate=1000, lowcut=0.05, highcut=3):
     """The algorithm is based on (but not an exact implementation of) the "Zero-crossing algorithm with amplitude
     threshold" by `Khodadad et al. (2018)
 
@@ -119,8 +119,8 @@ def _rsp_clean_khodadad2018(rsp_signal, sampling_rate=1000):
     clean = signal_filter(
         rsp_signal,
         sampling_rate=sampling_rate,
-        lowcut=0.05,
-        highcut=3,
+        lowcut=lowcut,
+        highcut=highcut,
         order=2,
         method="butterworth",
     )

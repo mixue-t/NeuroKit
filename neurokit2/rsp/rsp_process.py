@@ -8,7 +8,7 @@ from .rsp_peaks import rsp_peaks
 from .rsp_phase import rsp_phase
 
 
-def rsp_process(rsp_signal, sampling_rate=1000, method="khodadad2018"):
+def rsp_process(rsp_signal, sampling_rate=1000, method="khodadad2018", lowcut=0.05, highcut=3):
     """**Process a respiration (RSP) signal**
 
     Convenience function that automatically processes a respiration signal with one of the
@@ -71,7 +71,7 @@ def rsp_process(rsp_signal, sampling_rate=1000, method="khodadad2018"):
     rsp_signal = signal_sanitize(rsp_signal)
 
     # Clean signal
-    rsp_cleaned = rsp_clean(rsp_signal, sampling_rate=sampling_rate, method=method)
+    rsp_cleaned = rsp_clean(rsp_signal, sampling_rate=sampling_rate, method=method, lowcut=lowcut, highcut=highcut)
 
     # Extract, fix and format peaks
     peak_signal, info = rsp_peaks(rsp_cleaned, sampling_rate=sampling_rate, method=method, amplitude_min=0.3)

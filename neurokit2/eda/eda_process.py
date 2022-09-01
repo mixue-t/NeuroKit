@@ -7,7 +7,7 @@ from .eda_peaks import eda_peaks
 from .eda_phasic import eda_phasic
 
 
-def eda_process(eda_signal, sampling_rate=1000, method="neurokit"):
+def eda_process(eda_signal, sampling_rate=1000, method="neurokit", highcut=3):
     """**Process Electrodermal Activity (EDA)**
 
     Convenience function that automatically processes electrodermal activity (EDA) signal.
@@ -78,7 +78,7 @@ def eda_process(eda_signal, sampling_rate=1000, method="neurokit"):
     eda_signal = signal_sanitize(eda_signal)
 
     # Preprocess
-    eda_cleaned = eda_clean(eda_signal, sampling_rate=sampling_rate, method=method)
+    eda_cleaned = eda_clean(eda_signal, sampling_rate=sampling_rate, method=method, highcut=3)
     eda_decomposed = eda_phasic(eda_cleaned, sampling_rate=sampling_rate)
 
     # Find peaks
