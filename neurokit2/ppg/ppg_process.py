@@ -52,7 +52,6 @@ def ppg_process(ppg_signal, sampling_rate=1000, lowcut=0.5, highcut=8, **kwargs)
 
     """
 
-    print('modified')
     # Sanitize input
     ppg_signal = as_vector(ppg_signal)
 

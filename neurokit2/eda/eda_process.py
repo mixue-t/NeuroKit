@@ -78,7 +78,7 @@ def eda_process(eda_signal, sampling_rate=1000, method="neurokit", highcut=3):
     eda_signal = signal_sanitize(eda_signal)
 
     # Preprocess
-    eda_cleaned = eda_clean(eda_signal, sampling_rate=sampling_rate, method=method, highcut=3)
+    eda_cleaned = eda_clean(eda_signal, sampling_rate=sampling_rate, method=method, highcut=highcut)
     eda_decomposed = eda_phasic(eda_cleaned, sampling_rate=sampling_rate)
 
     # Find peaks
